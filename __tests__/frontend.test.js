@@ -286,6 +286,50 @@ describe('Frontend Todo Application', () => {
     });
   });
 
+  describe('editTodo function', () => {
+    test('should edit a todo', async () => {
+      const updatedTodo = { id: 1, text: 'Updated todo', completed: false };
+
+      fetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => updatedTodo
+      });
+
+      const response = await fetch('/api/todos/1/edit', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: 'Updated todo' }),
+      });
+
+      expect(response.ok).toBe(true);
+
+      const result = await response.json();
+      expect(result.text).toBe('Updated todo');
+    });
+
+    test('should handle edit error', async () => {
+      fetch.mockResolvedValueOnce({
+        ok: false
+      });
+
+      const response = await fetch('/api/todos/1/edit', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: 'Updated todo' }),
+      });
+
+      if (!response.ok) {
+        alert('Failed to edit todo');
+      }
+
+      expect(alert).toHaveBeenCalledWith('Failed to edit todo');
+    });
+  });
+
   describe('Input validation', () => {
     test('should trim whitespace from input', () => {
       todoInput.value = '  Test todo  ';

@@ -141,3 +141,17 @@ h1 {
     color: #6c757d;
     font-size: 18px;
 }
+
+.edit-btn {
+    background: #4e73df;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-btn:hover {
+    background: #2e59d9;
+}
